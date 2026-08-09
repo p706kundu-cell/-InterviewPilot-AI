@@ -2,7 +2,7 @@ import os
 import json
 from pathlib import Path
 from typing import Optional, Dict, Any
-
+from fastapi.responses import FileResponse
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -90,11 +90,9 @@ CURRICULUM = load_json_file("curriculum.json")
 
 @app.get("/")
 def home():
-    return {
-        "message": "InterviewPilot AI is running!"
-    }
+    frontend_path = BASE_DIR / "frontend" / "index.html"
 
-
+    return FileResponse(str(frontend_path))
 # ---------------------------------------------------------
 # LOCAL QUESTION BANK
 # ---------------------------------------------------------
