@@ -1,76 +1,106 @@
 # AI Usage Log — InterviewPilot AI
 
 ## Project
-InterviewPilot AI — Adaptive AI-powered technical interview platform
 
-## AI tools used
-- ChatGPT — used for project planning, debugging, code assistance, architecture decisions, Git/GitHub guidance, and troubleshooting.
-- OpenAI API — integrated into the application for optional AI-generated interview questions and final candidate feedback.
+InterviewPilot AI is an adaptive AI-powered technical interview platform designed to simulate technical interviews and provide personalized feedback.
 
-## Development prompts / assistance
+## AI Assistance Used
 
-### 1. Project architecture
-Used AI assistance to plan an adaptive technical interview system with:
-- FastAPI backend
-- Interactive frontend
-- Candidate profile collection
-- Adaptive technical questions
-- Eight-question interview flow
-- Automated final feedback
-- Local fallback when the OpenAI API is unavailable
+AI assistance was used during the development of InterviewPilot AI for:
 
-### 2. Adaptive interview logic
-AI assistance was used to design logic that:
-- evaluates the candidate's previous answer
-- adjusts question difficulty
-- avoids repeating topics where possible
-- covers multiple technical areas
-- completes the interview after eight answers
+- Project planning and feature design
+- Designing the adaptive interview flow
+- Developing and debugging the FastAPI backend
+- Developing and improving the frontend interface
+- Designing interview questions and evaluation logic
+- Debugging API communication and CORS issues
+- Improving error handling
+- Preparing the application for deployment
+- Debugging deployment issues
+- Improving project documentation
 
-### 3. OpenAI integration
-AI assistance was used to integrate the OpenAI API for:
-- generating interview questions
-- adapting questions based on the conversation
-- generating structured final feedback
+## Example Prompts / Development Tasks
 
-The application also contains a local fallback interviewer so that the core demonstration can continue when an API key, quota, or network connection is unavailable.
+### 1. Project Architecture
 
-### 4. Backend development
-AI assistance was used while developing and debugging:
-- FastAPI endpoints
-- Pydantic request models
-- JSON data loading
-- interview session management
-- error handling
-- CORS configuration
-- local development with Uvicorn
+Prompt:
+> Help design an AI-powered adaptive technical interview application using a FastAPI backend and a web frontend.
 
-### 5. Frontend development
-AI assistance was used to build and troubleshoot:
-- candidate input form
-- interview question display
-- answer submission
-- eight-question progress flow
-- final feedback screen
-- frontend/backend API communication
+Result:
+Used AI assistance to plan the backend/frontend architecture and interview workflow.
 
-### 6. Git and GitHub
-AI assistance was used for:
-- Git repository setup
-- branch management
-- GitHub authentication
-- committing project changes
-- pushing the project to a public GitHub repository
+### 2. Interview Generation
 
-## Human contribution
+Prompt:
+> Design an interview flow that generates technical questions based on the candidate's role, experience, and skills.
 
-The project was developed and tested by the project participant during the hackathon. AI assistance was used as a development aid for planning, implementation, debugging, and documentation. The resulting application was locally tested end-to-end, including candidate input, adaptive questions, eight responses, and final feedback.
+Result:
+Implemented an interview flow that collects candidate information and generates technical interview questions.
 
-## Important implementation note
+### 3. Answer Evaluation
 
-The application supports two question/feedback paths:
+Prompt:
+> Design an evaluation system that analyzes candidate answers and provides strengths, areas for improvement, and recommended next steps.
 
-1. OpenAI-powered generation when an API key is available.
-2. A local adaptive question and feedback engine as a fallback.
+Result:
+Implemented structured interview feedback containing assessment, strengths, gaps, and recommendations.
 
-This allows the core interview demonstration to remain functional without depending entirely on external API availability.
+### 4. Frontend Integration
+
+Prompt:
+> Help connect the frontend interview interface to the FastAPI backend using API requests.
+
+Result:
+Implemented frontend API communication for starting interviews and submitting answers.
+
+### 5. Debugging
+
+Prompt:
+> Debug the FastAPI frontend connection and explain why OPTIONS requests are returning 405 errors.
+
+Result:
+Used AI assistance to diagnose API communication and backend configuration issues.
+
+### 6. Deployment
+
+Prompt:
+> Help deploy the FastAPI application and frontend using Render and troubleshoot deployment errors.
+
+Result:
+Used AI assistance to troubleshoot dependency and deployment configuration problems.
+
+### 7. Dependency Fix
+
+Prompt:
+> Diagnose why Render reports that requirements.txt is a directory instead of a file.
+
+Result:
+Corrected the repository structure and created a valid requirements.txt file containing the required Python dependencies.
+
+## Human Development Work
+
+AI assistance was used as a development and debugging aid. The project was tested, configured, modified, and deployed by the project developer.
+
+The developer manually:
+
+- Configured the development environment
+- Created and modified project files
+- Tested the interview workflow
+- Debugged deployment issues
+- Verified the live application
+- Configured Git and GitHub
+- Deployed the application
+- Tested the final deployed version
+
+## Final Result
+
+The final application provides:
+
+- Candidate information collection
+- Adaptive technical interview questions
+- Answer submission
+- AI-assisted evaluation
+- Strength identification
+- Areas for improvement
+- Recommended next steps
+- Publicly accessible deployed application
