@@ -97,7 +97,7 @@ The developer manually:
 The final application provides:
 
 - Candidate information collection
-- Adaptive technical interview questions
+- Adaptive technical interview questionsb
 - Answer submission
 - AI-assisted evaluation
 - Strength identification
