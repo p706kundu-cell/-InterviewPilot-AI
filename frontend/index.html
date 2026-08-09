@@ -1,5 +1,86 @@
-input:focus, textarea:focus {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>InterviewPilot AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #080b14;
+            color: #ffffff;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        header h1 {
+            font-size: 38px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #aeb7d0;
+            font-size: 17px;
+        }
+
+        .card {
+            background: #111827;
+            border: 1px solid #293552;
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+        }
+
+        h2 {
+            margin-top: 0;
+            color: #ffffff;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: 600;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border-radius: 9px;
+            border: 1px solid #34405c;
+            background: #0b1020;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus,
+        textarea:focus {
             border-color: #7c8cff;
+        }
+
+        textarea {
+            min-height: 150px;
+            resize: vertical;
         }
 
         button {
@@ -15,22 +96,28 @@ input:focus, textarea:focus {
         }
 
         button:hover {
-            opacity: .9;
+            opacity: 0.9;
         }
 
         button:disabled {
-            opacity: .5;
+            opacity: 0.5;
             cursor: not-allowed;
         }
 
         .question-box {
-            background: #0e1426;
-            border: 1px solid #343c5b;
+            background: #0b1020;
+            border: 1px solid #34405c;
             border-radius: 14px;
             padding: 22px;
             margin: 20px 0;
             font-size: 19px;
             line-height: 1.6;
+        }
+
+        .progress {
+            color: #9ca6c3;
+            margin-top: 10px;
+            font-size: 14px;
         }
 
         .badge {
@@ -43,16 +130,10 @@ input:focus, textarea:focus {
             margin-bottom: 15px;
         }
 
-        .progress {
-            color: #9ca6c3;
-            margin-top: 12px;
-            font-size: 14px;
-        }
-
         .feedback-section {
             margin-top: 22px;
             padding: 20px;
-            background: #0e1426;
+            background: #0b1020;
             border-radius: 14px;
         }
 
@@ -82,6 +163,26 @@ input:focus, textarea:focus {
         .loading {
             color: #aeb7ff;
             margin-top: 15px;
+            min-height: 22px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .start-again {
+            background: #252d4b;
+        }
+
+        footer {
+            text-align: center;
+            color: #68728e;
+            margin-top: 35px;
+            font-size: 13px;
         }
     </style>
 </head>
@@ -90,332 +191,699 @@ input:focus, textarea:focus {
 
 <div class="container">
 
+    <!-- HEADER -->
     <header>
-        <div class="logo">Interview<span>Pilot AI</span></div>
-        <div class="tagline">
-            Adaptive AI-powered technical interviews
-        </div>
+        <h1>🤖 InterviewPilot AI</h1>
+        <p>Adaptive AI-powered technical interviews</p>
     </header>
 
+
     <!-- START SCREEN -->
-    <div id="startScreen" class="card">
+    <section id="startScreen" class="card">
 
-        <h2>Start Your Interview</h2>
+        <h2>🚀 Start Your Interview</h2>
 
-        <label>Name</label>
-        <input id="name" placeholder="Enter your name">
+        <label for="name">Name</label>
+        <input
+            type="text"
+            id="name"
+            placeholder="Enter your name"
+        >
 
-        <label>Target Job Role</label>
-        <input id="jobRole" placeholder="e.g. AI Engineer">
+        <label for="jobRole">Target Job Role</label>
+        <input
+            type="text"
+            id="jobRole"
+            placeholder="e.g. AI Engineer"
+        >
 
-        <label>Experience</label>
-        <input id="experience" placeholder="e.g. Fresher / 1 year">
+        <label for="experience">Experience</label>
+        <input
+            type="text"
+            id="experience"
+            placeholder="e.g. Fresher / 1 year"
+        >
 
-        <label>Skills</label>
-        <input id="skills" placeholder="e.g. Python, AI, FastAPI, Machine Learning">
+        <label for="skills">Skills</label>
+        <input
+            type="text"
+            id="skills"
+            placeholder="e.g. Python, AI, FastAPI, Java"
+        >
 
-        <button onclick="startInterview()">
+        <button id="startBtn" onclick="startInterview()">
             🚀 Start Adaptive Interview
         </button>
 
         <div id="startError" class="error"></div>
 
-    </div>
+    </section>
 
 
     <!-- INTERVIEW SCREEN -->
-    <div id="interviewScreen" class="card hidden">
+    <section id="interviewScreen" class="card hidden">
 
-        <div class="badge">🤖 InterviewPilot AI</div>
-
-        <div id="question" class="question-box">
-            Loading question...
+        <div class="badge">
+            🤖 InterviewPilot AI
         </div>
+
+        <h2>Technical Interview</h2>
+
+        <div id="loading" class="loading"></div>
 
         <div id="progress" class="progress">
             Question 1 / 8
         </div>
 
-        <label>Your Answer</label>
+        <div id="question" class="question-box">
+            Loading question...
+        </div>
+
+        <label for="answer">Your Answer</label>
 
         <textarea
             id="answer"
-            placeholder="Explain your answer clearly. Include examples, architecture decisions, trade-offs, etc."
+            placeholder="Explain your answer clearly. Include examples and technical reasoning where possible."
         ></textarea>
 
-        <button id="submitBtn" onclick="submitAnswer()">
+        <button
+            id="submitBtn"
+            onclick="submitAnswer()"
+        >
             Submit Answer →
         </button>
 
-        <div id="loading" class="loading"></div>
         <div id="interviewError" class="error"></div>
 
-    </div>
+    </section>
 
 
     <!-- RESULTS SCREEN -->
-    <div id="resultsScreen" class="card hidden">
+    <section id="resultsScreen" class="card hidden">
 
-        <h2>🎉 Interview Completed</h2>
+        <div class="center">
+            <h2 class="success">
+                🎉 Interview Completed
+            </h2>
 
-        <p class="success">
-            Your adaptive technical interview has been evaluated.
-        </p>
+            <p>
+                Your adaptive technical interview has been evaluated.
+            </p>
+        </div>
 
+
+        <!-- OVERALL ASSESSMENT -->
         <div class="feedback-section">
+
             <h3>📊 Overall Assessment</h3>
-            <p id="summary"></p>
+
+            <p id="summary">
+                Interview completed successfully.
+            </p>
+
         </div>
 
+
+        <!-- STRENGTHS -->
         <div class="feedback-section">
+
             <h3>💪 Strengths</h3>
-            <ul id="strengths"></ul>
+
+            <ul id="strengths">
+                <li>Completed the technical interview.</li>
+            </ul>
+
         </div>
 
+
+        <!-- GAPS -->
         <div class="feedback-section">
+
             <h3>⚡ Areas to Improve</h3>
-            <ul id="gaps"></ul>
+
+            <ul id="gaps">
+                <li>Continue developing technical depth.</li>
+            </ul>
+
         </div>
 
+
+        <!-- NEXT STEPS -->
         <div class="feedback-section">
+
             <h3>🚀 Recommended Next Steps</h3>
-            <ul id="nextSteps"></ul>
+
+            <ul id="nextSteps">
+                <li>Continue practicing technical interviews.</li>
+            </ul>
+
         </div>
 
-        <button onclick="location.reload()">
-            Start New Interview
-        </button>
 
-    </div>
+        <div class="center">
+
+            <button
+                class="start-again"
+                onclick="startNewInterview()"
+            >
+                🔄 Start New Interview
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        InterviewPilot AI • Adaptive Technical Interview Platform
+    </footer>
 
 </div>
 
 
 <script>
 
-const API_URL = "https://interviewpilot-ai-08yj.onrender.com";
+    /*
+     * API URL
+     *
+     * When running locally:
+     * frontend on port 5500 -> backend on port 8000
+     *
+     * When deployed on Render:
+     * frontend and backend use the same origin.
+     */
 
-let sessionId = "";
-let questionNumber = 0;
+    const API_URL =
+        (window.location.hostname === "127.0.0.1" &&
+         window.location.port === "5500")
+            ? "http://127.0.0.1:8000"
+            : window.location.origin;
 
 
-// Generate unique interview session
-function createSessionId() {
-    return "session-" + Date.now();
-}
+    let sessionId = "";
+    let questionNumber = 0;
 
 
-// START INTERVIEW
-async function startInterview() {
+    // ==========================================
+    // CREATE SESSION ID
+    // ==========================================
 
-    const name = document.getElementById("name").value.trim();
-    const jobRole = document.getElementById("jobRole").value.trim();
-    const experience = document.getElementById("experience").value.trim();
-    const skills = document.getElementById("skills").value.trim();
+    function createSessionId() {
 
-    const error = document.getElementById("startError");
+        return "session-" + Date.now();
 
-    if (!name || !jobRole) {
-        error.textContent = "Please enter your name and target job role.";
-        return;
     }
 
-    sessionId = createSessionId();
 
-    const candidate = {
-        name: name,
-        jobRole: jobRole,
-        experience: experience,
-        skills: skills
-    };
+    // ==========================================
+    // START INTERVIEW
+    // ==========================================
 
-    error.textContent = "";
+    async function startInterview() {
 
-    try {
+        const name =
+            document.getElementById("name").value.trim();
 
-        const response = await fetch(
-            API_URL + "/api/interview",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    sessionId: sessionId,
-                    candidate: candidate
-                })
-            }
-        );
+        const jobRole =
+            document.getElementById("jobRole").value.trim();
 
-        const data = await response.json();
+        const experience =
+            document.getElementById("experience").value.trim();
 
-        if (!response.ok) {
-            throw new Error("Backend request failed.");
+        const skills =
+            document.getElementById("skills").value.trim();
+
+        const error =
+            document.getElementById("startError");
+
+
+        if (!name || !jobRole) {
+
+            error.textContent =
+                "Please enter your name and target job role.";
+
+            return;
         }
 
-        questionNumber = 1;
 
-        document.getElementById("startScreen")
-            .classList.add("hidden");
-
-        document.getElementById("interviewScreen")
-            .classList.remove("hidden");
-
-        showQuestion(data.reply);
-
-    } catch (err) {
-
-        error.textContent =
-            "Could not connect to the backend. Make sure FastAPI is running.";
-
-    }
-}
+        sessionId = createSessionId();
 
 
-// DISPLAY QUESTION
-function showQuestion(text) {
+        const candidate = {
 
-    document.getElementById("question")
-        .textContent = text;
+            name: name,
 
-    document.getElementById("progress")
-        .textContent =
-        "Question " + questionNumber + " / 8";
+            jobRole: jobRole,
 
-    document.getElementById("answer").value = "";
+            experience: experience,
 
-    document.getElementById("answer").focus();
-}
+            skills: skills
+
+        };
 
 
-// SUBMIT ANSWER
-async function submitAnswer() {
+        error.textContent = "";
 
-    const answerBox = document.getElementById("answer");
-    const answer = answerBox.value.trim();
 
-    if (!answer) {
-        document.getElementById("interviewError")
-            .textContent = "Please enter an answer first.";
-        return;
-    }
+        const startButton =
+            document.getElementById("startBtn");
 
-    document.getElementById("interviewError")
-        .textContent = "";
+        startButton.disabled = true;
 
-    const button = document.getElementById("submitBtn");
+        startButton.textContent =
+            "🤖 Starting Interview...";
 
-    button.disabled = true;
 
-    document.getElementById("loading")
-        .textContent =
-        "🤖 InterviewPilot is analyzing your answer...";
+        try {
 
-    try {
+            const response = await fetch(
+                API_URL + "/api/interview",
+                {
+                    method: "POST",
 
-        const response = await fetch(
-            API_URL + "/api/interview",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    sessionId: sessionId,
-                    message: answer
-                })
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        sessionId: sessionId,
+
+                        candidate: candidate
+
+                    })
+                }
+            );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Backend request failed."
+                );
+
             }
-        );
 
-        const data = await response.json();
 
-        if (!response.ok) {
-            throw new Error("Backend request failed.");
-        }
+            questionNumber = 1;
 
-        document.getElementById("loading")
-            .textContent = "";
-             if (data.done) {
 
-    console.log("FINAL RESPONSE:", data);
+            document
+                .getElementById("startScreen")
+                .classList.add("hidden");
 
-    if (data.feedback) {
-        showResults(data.feedback);
-    } else {
-        alert("Interview completed, but feedback was not returned.");
-    }
 
-} else {
+            document
+                .getElementById("resultsScreen")
+                .classList.add("hidden");
 
-            questionNumber++;
+
+            document
+                .getElementById("interviewScreen")
+                .classList.remove("hidden");
+
 
             showQuestion(data.reply);
 
-            button.disabled = false;
+
         }
 
-    } catch (err) {
+        catch (err) {
 
-        document.getElementById("loading")
+            console.error(err);
+
+
+            error.textContent =
+                "Could not connect to the backend. Make sure FastAPI is running.";
+
+
+            startButton.disabled = false;
+
+            startButton.textContent =
+                "🚀 Start Adaptive Interview";
+
+        }
+
+    }
+
+
+    // ==========================================
+    // SHOW QUESTION
+    // ==========================================
+
+    function showQuestion(text) {
+
+        document
+            .getElementById("question")
+            .textContent =
+                text || "Please answer the interview question.";
+
+
+        document
+            .getElementById("progress")
+            .textContent =
+                "Question " +
+                questionNumber +
+                " / 8";
+
+
+        document
+            .getElementById("answer")
+            .value = "";
+
+
+        document
+            .getElementById("answer")
+            .focus();
+
+    }
+
+
+    // ==========================================
+    // SUBMIT ANSWER
+    // ==========================================
+
+    async function submitAnswer() {
+
+        const answerBox =
+            document.getElementById("answer");
+
+
+        const answer =
+            answerBox.value.trim();
+
+
+        const error =
+            document.getElementById("interviewError");
+
+
+        if (!answer) {
+
+            error.textContent =
+                "Please enter an answer first.";
+
+            return;
+
+        }
+
+
+        error.textContent = "";
+
+
+        const button =
+            document.getElementById("submitBtn");
+
+
+        button.disabled = true;
+
+
+        document
+            .getElementById("loading")
+            .textContent =
+                "🤖 InterviewPilot is analyzing your answer...";
+
+
+        try {
+
+            const response = await fetch(
+                API_URL + "/api/interview",
+                {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify({
+
+                        sessionId: sessionId,
+
+                        message: answer
+
+                    })
+
+                }
+            );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Backend request failed."
+                );
+
+            }
+
+
+            document
+                .getElementById("loading")
+                .textContent = "";
+
+
+            // ==================================
+            // INTERVIEW FINISHED
+            // ==================================
+
+            if (data.done) {
+
+                console.log(
+                    "FINAL RESPONSE:",
+                    data
+                );
+
+
+                showResults(
+                    data.feedback
+                );
+
+
+                return;
+
+            }
+
+
+            // ==================================
+            // NEXT QUESTION
+            // ==================================
+
+            questionNumber++;
+
+
+            showQuestion(
+                data.reply
+            );
+
+
+            button.disabled = false;
+
+        }
+
+        catch (err) {
+
+            console.error(err);
+
+
+            document
+                .getElementById("loading")
+                .textContent = "";
+
+
+            error.textContent =
+                "Something went wrong. Check that the FastAPI server is running.";
+
+
+            button.disabled = false;
+
+        }
+
+    }
+
+
+    // ==========================================
+    // SHOW RESULTS
+    // ==========================================
+
+    function showResults(feedback) {
+
+        document
+            .getElementById("interviewScreen")
+            .classList.add("hidden");
+
+
+        document
+            .getElementById("resultsScreen")
+            .classList.remove("hidden");
+
+
+        /*
+         * Fallback feedback.
+         *
+         * This prevents an empty results screen
+         * if the backend doesn't return feedback.
+         */
+
+        if (!feedback) {
+
+            feedback = {
+
+                summary:
+                    "The candidate completed the adaptive technical interview successfully. The interview evaluated technical understanding, communication, architecture, scalability, and production-oriented thinking.",
+
+
+                strengths: [
+
+                    "Completed the technical interview.",
+
+                    "Demonstrated familiarity with relevant technical concepts.",
+
+                    "Showed awareness of practical engineering considerations."
+
+                ],
+
+
+                gaps: [
+
+                    "Provide deeper explanations with concrete implementation examples.",
+
+                    "Strengthen discussion of architecture and technical trade-offs."
+
+                ],
+
+
+                next: [
+
+                    "Practice explaining technical decisions using real-world examples.",
+
+                    "Review system design, scalability, security, and AI architecture."
+
+                ]
+
+            };
+
+        }
+
+
+        document
+            .getElementById("summary")
+            .textContent =
+                feedback.summary ||
+                "Interview completed successfully.";
+
+
+        fillList(
+            "strengths",
+            feedback.strengths ||
+            [
+                "Completed the technical interview."
+            ]
+        );
+
+
+        fillList(
+            "gaps",
+            feedback.gaps ||
+            [
+                "Continue developing technical depth."
+            ]
+        );
+
+
+        fillList(
+            "nextSteps",
+            feedback.next ||
+            [
+                "Continue practicing technical interviews."
+            ]
+        );
+
+    }
+
+
+    // ==========================================
+    // FILL LIST
+    // ==========================================
+
+    function fillList(elementId, items) {
+
+        const list =
+            document.getElementById(elementId);
+
+
+        list.innerHTML = "";
+
+
+        if (!Array.isArray(items)) {
+
+            items = [items];
+
+        }
+
+
+        items.forEach(function(item) {
+
+            const li =
+                document.createElement("li");
+
+
+            li.textContent = item;
+
+
+            list.appendChild(li);
+
+        });
+
+    }
+
+
+    // ==========================================
+    // START NEW INTERVIEW
+    // ==========================================
+
+    function startNewInterview() {
+
+        sessionId = "";
+
+        questionNumber = 0;
+
+
+        document
+            .getElementById("resultsScreen")
+            .classList.add("hidden");
+
+
+        document
+            .getElementById("interviewScreen")
+            .classList.add("hidden");
+
+
+        document
+            .getElementById("startScreen")
+            .classList.remove("hidden");
+
+
+        document
+            .getElementById("name")
+            .focus();
+
+
+        document
+            .getElementById("startError")
             .textContent = "";
 
-        document.getElementById("interviewError")
-            .textContent =
-            "Something went wrong. Check that the FastAPI server is running.";
-
-        button.disabled = false;
-    }
-}
-
-
-// SHOW FINAL FEEDBACK
-function showResults(feedback) {
-
-    document.getElementById("interviewScreen")
-        .classList.add("hidden");
-
-    document.getElementById("resultsScreen")
-        .classList.remove("hidden");
-
-    // Reliable fallback feedback for demo
-    if (!feedback) {
-        feedback = {
-            summary:
-                "The candidate completed the adaptive technical interview successfully. The interview evaluated technical understanding, communication, architecture, scalability, and production-oriented thinking.",
-
-            strengths: [
-                "Completed all 8 technical interview questions.",
-                "Demonstrated engagement with technical concepts.",
-                "Showed understanding of practical engineering considerations."
-            ],
-
-            gaps: [
-                "Provide deeper explanations with concrete implementation examples.",
-                "Strengthen discussion of architecture and technical trade-offs."
-            ],
-
-            next: [
-                "Practice explaining technical decisions using real-world examples.",
-                "Review system design, scalability, security, and AI architecture."
-            ]
-        };
     }
 
-    document.getElementById("summary")
-        .textContent = feedback.summary || "Interview completed successfully.";
+</script>
 
-    fillList(
-        "strengths",
-        feedback.strengths || ["Completed the technical interview."]
-    );
-
-    fillList(
-        "gaps",
-        feedback.gaps || ["Continue developing technical depth."]
-    );
-
-    fillList(
-        "nextSteps",
-        feedback.next || ["Continue practicing technical interviews."]
-    );
-}
+</body>
+</html>
